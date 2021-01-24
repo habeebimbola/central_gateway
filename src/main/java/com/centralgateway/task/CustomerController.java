@@ -1,5 +1,6 @@
 package com.centralgateway.task;
 
+import com.centralgateway.task.aspects.RecordLogger;
 import com.centralgateway.task.repository.CustomerRepository;
 import com.centralgateway.task.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.ExecutorService;
+
 @RestController
+@RecordLogger
 public class CustomerController {
 
     @Autowired
