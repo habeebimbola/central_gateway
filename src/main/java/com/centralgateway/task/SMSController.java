@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +28,9 @@ public class SMSController {
 private final Logger logger = LoggerFactory.getLogger(SMSController.class);
     private final RestTemplate restTemplate;
     private final DVDActorService dvdActorService;
+
+    @Autowired
+    private SMSDeliveryStatus deliveryStatus;
 
     @Autowired
     private ArithmeticCalculatorImpl  arithmeticCalculator;
@@ -69,11 +71,12 @@ private final Logger logger = LoggerFactory.getLogger(SMSController.class);
     }
 
     @PostMapping(path = "/sendSMS", consumes = "application/json")
-    public ResponseEntity<SMSResponse> sendSMS(@RequestBody SMSMessage smsMessage){
+    public SMSResponse sendSMS(@RequestBody SMSMessage smsMessage){
         ResponseEntity<SMSResponse> responseEntity =  this.restTemplate.postForEntity(URI.create("https://test-api.fidelitybank.ng/CardControlAPI/api/messaging/sendsms"),smsMessage, SMSResponse.class );
 
+        this.deliveryStatus.smsDeliveryStatus(responseEntity.getBody());
         logger.info("Response Status Code: "+responseEntity.getStatusCode());
-        return responseEntity;
+        return responseEntity.getBody();
     }
 
     @PostMapping(path ="/actor", produces = "application/json", consumes = "application/json")
@@ -83,7 +86,7 @@ private final Logger logger = LoggerFactory.getLogger(SMSController.class);
         return actorResponseEntity;
     }
 
-    @Scheduled(fixedDelay = 50000)
+//    @Scheduled(fixedDelay = 50000)
     public void repeated(){
         logger.info("This Line is executed repeatedly!");
     }

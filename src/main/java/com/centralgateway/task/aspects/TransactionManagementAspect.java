@@ -38,10 +38,10 @@ public class TransactionManagementAspect {
 //    public void recordLogger(){
 //
 //    }
-    @AfterReturning( pointcut = "within(com.centralgateway.task.*)" , returning = "result")
-    public void logSelect(JoinPoint joinPoint, Object result){
-        logger.info("Successfully executed {} with Result: {}", joinPoint.getKind(), result );
-    }
+//    @AfterReturning( pointcut = "within(com.centralgateway.task.*)" , returning = "result")
+//    public void logSelect(JoinPoint joinPoint, Object result){
+//        logger.info("Successfully executed {} with Result: {}", joinPoint.getKind(), result );
+//    }
 
 //    @Before("recordLogger()")
 //    public void logChecker(JoinPoint joinPoint){
