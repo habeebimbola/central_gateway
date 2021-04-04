@@ -109,25 +109,49 @@ public class DataStructure {
         }
         return K;
     }
-    public int[] reverseArr(int[] arr){
-         List arrayList = Arrays.asList(arr);
-        System.out.println("Size " +arrayList.size());
+    public int reverseArr(int[] arr){
 
-        ArrayList<Integer> list = new ArrayList<>(arrayList);
-         Collections.reverse(list) ;
+        int size = arr.length;
+        int smallest = 1;
 
-        return arr;
+        if(size < 1){
+            return smallest;
+        }
+
+        if( size == 1 && arr[size - 1] > smallest)
+        {
+            return smallest;
+        }
+
+        Arrays.sort(arr);
+
+        if( arr[0] > 1 || arr[size - 1] < 1)
+        {
+            return smallest;
+        }
+
+        for(int index = 1; index <= size; index++)
+        {
+            if(arr[index - 1] == index || smallest < arr[index - 1])
+            {
+                smallest++;
+            }
+        }
+
+        return smallest;
     }
     public static void main(String[] args)
     {
         DataStructure dataStructure = new DataStructure();
-        int[] A = {1,2,3};
+        int[] A = {-1,-2,-3};
         int[] Z = {1,1,2,3,4,6};
         int[] K = {1,2,3,4,5};
         int[] X = {1,4,3,2};
 //        dataStructure.minInteger(A);
-//        dataStructure.circularArray(K,4);
+        System.out.println( dataStructure.reverseArr(A));
+        System.out.println( Integer.reverse(32));
         System.out.println();
+
         int [] T = dataStructure.reverseArray(X);
         for (int t: T){
             System.out.printf("%d ", t);
