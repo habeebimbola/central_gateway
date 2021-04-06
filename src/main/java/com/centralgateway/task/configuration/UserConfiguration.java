@@ -12,22 +12,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 
+import javax.sql.DataSource;
 import javax.xml.bind.DatatypeConverter;
 
 
@@ -110,24 +121,25 @@ public class  UserConfiguration implements WebMvcConfigurer  {
         return contentNegotiatingViewResolver;
     }
 
-    @Override
-    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
-        resolvers.add((handlerExceptionResolver()));
-    }
-
-    @Bean
-    public HandlerExceptionResolver handlerExceptionResolver()
-    {
-        Properties exceptionMapping = new Properties();
-        exceptionMapping.setProperty("","");
-        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
-        exceptionResolver.setExceptionMappings(exceptionMapping);
-        exceptionResolver.setDefaultErrorView("error");
-
-        Objects.equals(null, null);
-
-        return  exceptionResolver;
-    }
+//    @Override
+//    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+//        resolvers.add((handlerExceptionResolver()));
+//    }
+//
+//    @Bean
+//    public HandlerExceptionResolver handlerExceptionResolver()
+//    {
+//        Properties exceptionMapping = new Properties();
+//        exceptionMapping.setProperty(Exception.class.getName(),"runtimeExceptionForm");
+//
+//        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+//        exceptionResolver.setExceptionMappings(exceptionMapping);
+//        exceptionResolver.setDefaultErrorView("error");
+//
+//        Objects.equals(null, null);
+//
+//        return  exceptionResolver;
+//    }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
@@ -135,4 +147,42 @@ public class  UserConfiguration implements WebMvcConfigurer  {
     }
 
 
+//    @Bean
+//    public MessageSource messageSource(){
+//        ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
+//        bundleMessageSource.setBasename("messages");
+//        return bundleMessageSource;
+//    }
+
+
+    @Bean
+    public LocaleResolver cookieLocaleResolver(){
+        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+        cookieLocaleResolver.setCookieName("language");
+        cookieLocaleResolver.setCookieMaxAge(-1);
+
+        return cookieLocaleResolver;
+    }
+
+
+    @Bean
+    public LocaleResolver sessionLocaleResolver(){
+        SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
+        sessionLocaleResolver.setLocaleAttributeName("");
+        return sessionLocaleResolver;
+    }
+
+//    @Bean
+//    @Autowired
+//    public DataSource dataSource( DataSource dataSource){
+//        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+//        return driverManagerDataSource;
+//    }
+
+    @Bean
+    @Autowired
+    public JdbcTemplate jdbcTemplate(DataSource dataSource){
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate;
+    }
 }

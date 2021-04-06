@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/1999">
+<head>
+    <meta charset="UTF-8">
+    <title>All Actors Within The System </title>
+</head>
+<body>
+<h1>Viewing All The Actors Within The System</h1>
+<div th:each = "actor: ${ allActorsList }"  th:if="${ not #lists.isEmpty(allActorsList)}">
+    <span th:text="${actor.firstName}"></span>
+    <span th:text="${actor.lastName}"></span>
+</div>
+</body>
+</html>

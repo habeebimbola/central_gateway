@@ -5,6 +5,24 @@
     <title>Welcome To The World Of Interesting Shows</title>
 </head>
 <body>
-<h1>Welcome To The Exciting World Of Programming!</h1>
+<h1>Welcome To The Exciting World Of Spring Web Programming!</h1>
+<div>
+
+    <form th:action ="@{/welcome}" method="post" th:object="${actor}">
+        <div>
+          <label>Firstname: <input name="Firstname" th:field="*{firstName}" size="30" /></label>
+
+        </div>
+        <div>
+         <label>
+           Lastname:  <input name="Lastname" th:field="*{lastName}" size="30" />
+         </label>
+        </div>
+
+        <div>
+            <input type="submit" value="Register" />
+        </div>
+    </form>
+</div>
 </body>
 </html>
