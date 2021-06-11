@@ -17,6 +17,7 @@ public  class WelcomeValidator implements Validator {
     public void validate(Object o, Errors errors) {
         DVDActor dvdActor = (DVDActor)o;
 
+        Integer.toBinaryString(12);
         if(dvdActor.getFirstName().isEmpty())
             errors.rejectValue("firstName","firstName.text","Firstname  Cannot Be Empty.");
     }

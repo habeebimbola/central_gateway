@@ -143,18 +143,44 @@ public class DataStructure {
     public static void main(String[] args)
     {
         DataStructure dataStructure = new DataStructure();
+        int[][] coords = new int[2][4], xy = {{2,3},{6,5},{8,9,1}};
+
         int[] A = {-1,-2,-3};
         int[] Z = {1,1,2,3,4,6};
         int[] K = {1,2,3,4,5};
         int[] X = {1,4,3,2};
 //        dataStructure.minInteger(A);
         System.out.println( dataStructure.reverseArr(A));
-        System.out.println( Integer.reverse(32));
+        System.out.println( Integer.toBinaryString(529));
         System.out.println();
 
         int [] T = dataStructure.reverseArray(X);
         for (int t: T){
             System.out.printf("%d ", t);
+        }
+        String[] tokens = Integer.toBinaryString(529).split("^10{1,}1$");
+        System.out.printf("Length: %d\n%s", tokens.length , tokens[0]);
+        //System.out.printf("Tokens: %s \n %s \n %s", tokens[0], tokens[1], tokens[2]);
+
+        System.out.println();
+
+        for(int row = 0; row < xy.length; row++)
+        {
+            for(int col = 0;col < xy[row].length; col++)
+            {
+                System.out.printf("%d ", xy[row][col]);
+            }
+            System.out.println();
+        }
+
+
+        for( int row = 0; row < coords.length; row++ )
+        {
+            for(int col = 0; col < coords[row].length; col++)
+            {
+                System.out.printf("%d ", coords[row][col]);
+            }
+            System.out.println();
         }
     }
 }
